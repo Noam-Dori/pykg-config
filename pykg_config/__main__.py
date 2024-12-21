@@ -43,8 +43,9 @@ from .errorprinter import ErrorPrinter
 from .result import PkgCfgResult, NoPackagesSpecifiedError
 from .options import Options
 from .version import Version
-from .pkgsearcher import PackageNotFoundError, NoOpenableFilesError
+from .pkgsearcher import PackageNotFoundError, NoOpenableFilesError, _split_char
 from .substitute import UndefinedVarError
+from .envVars2VarsRemap import look_up_var_in_env
 
 PYKG_CONFIG_VERSION = '1.1.0'
 CORRESPONDING_VERSION = '0.26'
@@ -193,7 +194,7 @@ def main():
             break
 
     def splitSerializedList(ls):
-        return ls.split(self._split_char())
+        return ls.split(_split_char())
 
     variable_init_spec = {
         ("pc_sysrootdir", str),

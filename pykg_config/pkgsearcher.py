@@ -225,14 +225,14 @@ class PkgSearcher:
 
     def _init_search_dirs(self):
         # Append dirs in PKG_CONFIG_PATH
-        if "config_path" in self.globals and self.globals["config_path"]:
-            for d in self.globals["config_path"]:
+        if "pc_path" in self.globals and self.globals["pc_path"]:
+            for d in self.globals["pc_path"]:
                 if not d or not isdir(d):
                     continue
                 self._append_packages(d)
         # Append dirs in PKG_CONFIG_LIBDIR
-        if "config_libdir" in self.globals and self.globals["config_libdir"]:
-            for d in self.globals["config_libdir"]:
+        if "pc_libdir" in self.globals and self.globals["pc_libdir"]:
+            for d in self.globals["pc_libdir"]:
                 if not d or not isdir(d):
                     continue
                 self._append_packages(d)
@@ -264,7 +264,7 @@ class PkgSearcher:
         else:
             prefix = sys.prefix
         if pc_path:
-            for d in pc_path.split(self._split_char()):
+            for d in pc_path.split(_split_char()):
                 if d and isdir(d):
                     self._append_packages(d)
         # Default path: Else append prefix/lib/pkgconfig, prefix/share/pkgconfig
@@ -302,12 +302,6 @@ class PkgSearcher:
                 else:
                     self._known_pkgs[name] = [full_path]
 
-    def _split_char(self):
-        # Get the character used to split a list of directories.
-        if sys.platform == 'win32':
-            return ';'
-        return ':'
-
     def _can_open_file(self, filename):
         try:
             result = open(filename, 'r')
@@ -322,6 +316,13 @@ class PkgSearcher:
                                                                                 e.strerror))
             return False
         return True
+
+
+def _split_char():
+    # Get the character used to split a list of directories.
+    if sys.platform == 'win32':
+        return ';'
+    return ':'
 
 
 # vim: tw=79

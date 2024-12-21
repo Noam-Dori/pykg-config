@@ -32,7 +32,7 @@
 __version__ = "$Revision: $"
 # $Source$
 
-env_var_prefix = "PKG_CONFIG_PATH"
+env_var_prefix = "PKG_CONFIG_"
 
 envVars2VarsRemap = {
     "PATH": "pc_path",
@@ -42,7 +42,7 @@ envVars2VarsRemap = {
 }
 
 envVars2VarsRemap = {
-    (k + env_var_prefix): v for k, v in envVars2VarsRemap.items()
+    (env_var_prefix + k): v for k, v in envVars2VarsRemap.items()
 }
 vars2EnvVarsRemap = {v: k for k, v in envVars2VarsRemap.items()}
 
