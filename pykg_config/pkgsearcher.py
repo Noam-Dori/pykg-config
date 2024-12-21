@@ -105,7 +105,7 @@ class TargetTriple:
     __slots__ = ("arch", "bitness", "os", "abi")
 
     def __init__(self, arch = None, os = None, abi = None, bitness = None) -> None:
-        pythonTripl = sys.implementation._multiarch.split("-")
+        pythonTripl = getattr(sys.implementation, '_multiarch', '--').split("-")
         self.arch = arch if arch is not None else pythonTripl[0]
         self.os = os if os is not None else pythonTripl[1]
         self.abi = abi if abi is not None else pythonTripl[2]
